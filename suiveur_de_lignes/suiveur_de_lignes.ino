@@ -38,6 +38,38 @@ void piloterMoteur(byte adresse, byte direction, byte vitesse) {
   Wire.endTransmission();
 }
 
+//fonctions pour commandes de propulsion
+void droiteLeger()
+{
+  piloterMoteur(MOTEUR_GAUCHE, AVANT, 40); // Vitesse 40/63
+  piloterMoteur(MOTEUR_DROIT, ARRIERE, 20);
+}
+void droiteFort()
+{
+  piloterMoteur(MOTEUR_GAUCHE, AVANT, 50); // Vitesse 40/63
+  piloterMoteur(MOTEUR_DROIT, AVANT, 10);
+}
+void gaucheLeger()
+{
+  piloterMoteur(MOTEUR_GAUCHE, AVANT, 20); // Vitesse 40/63
+  piloterMoteur(MOTEUR_DROIT, ARRIERE, 40);
+}
+void gaucheFort()
+{
+  piloterMoteur(MOTEUR_GAUCHE, ARRIERE, 10); // Vitesse 40/63
+  piloterMoteur(MOTEUR_DROIT, ARRIERE, 50);
+}
+void avancer()
+{
+  piloterMoteur(MOTEUR_GAUCHE, AVANT, 40); // Vitesse 40/63
+  piloterMoteur(MOTEUR_DROIT, ARRIERE, 40);
+}
+void stop()
+{
+  piloterMoteur(MOTEUR_GAUCHE, AVANT, 0); // Vitesse 40/63
+  piloterMoteur(MOTEUR_DROIT, ARRIERE, 0);
+}
+
 void loop() {
   // mise a jour des led pour savoir où est la ligne
   LightSensorRGB_1.updataAllSensorValue();
@@ -48,47 +80,33 @@ void loop() {
   if(position==9)
   //          1001
   {
-    //remplir
-    //Les 2 moteurs vont à la même vitesse
-    
-    piloterMoteur(MOTEUR_GAUCHE, AVANT, 40); // Vitesse 40/63
-    piloterMoteur(MOTEUR_DROIT, ARRIERE, 40);
+  avancer();
   }
   else if(position==3 || position==1 || position ==11)
   //              0011           0001            1011
   {
-    //remplir
-    //tourne à gauche légèrement
-      piloterMoteur(MOTEUR_GAUCHE, AVANT, 20); // Vitesse 40/63
-      piloterMoteur(MOTEUR_DROIT, ARRIERE, 40); //
+    gaucheLeger();
   }
   else if(position==8)
   //              1000
-  {//tourner a gauche fortement
-      piloterMoteur(MOTEUR_GAUCHE, ARRIERE, 10); // Vitesse 40/63
-      piloterMoteur(MOTEUR_DROIT, ARRIERE, 50); //
+  {
+    gaucheFort();
   }
   else if(position==12 || position==8 || position==13)
   //            1100           1000         1101
   {
-    //remplir
-    //tourner à droite légèrement
-      piloterMoteur(MOTEUR_GAUCHE, AVANT, 40); // Vitesse 40/63
-      piloterMoteur(MOTEUR_DROIT, ARRIERE, 20);
+    droiteLeger();
   }
   else if(position==14)
   //              1110
-{//tourner fortement a droite
-  piloterMoteur(MOTEUR_GAUCHE, AVANT, 50); // Vitesse 40/63
-  piloterMoteur(MOTEUR_DROIT, AVANT, 10); //
+{
+  droiteFort();
 }
 
   else if(position==15)
   //              1111
   {
-    //remplir
-    piloterMoteur(MOTEUR_GAUCHE, AVANT, 0); // Vitesse 40/63
-    piloterMoteur(MOTEUR_DROIT, ARRIERE, 0);
+  stop();
   }
-  delay(50);
+  delay(100);
 }
